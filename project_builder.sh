@@ -1,3 +1,6 @@
+
+#!/bin/bash
+
 CURRENT_FOLDER=$(pwd)
 
 go_to_project_folder() {
