@@ -1,6 +1,3 @@
-
-#!/bin/bash
-
 CURRENT_FOLDER=$(pwd)
 
 go_to_project_folder() {
@@ -13,20 +10,30 @@ create_venv() {
     virtualenv venv
 }
 
+create_project_structure() {
+    touch setup.py
+    touch main.py
+    touch requirements.txt
+}
+
+create_module() {
+    local module_name=$1
+    mkdir $module_name
+    cd $module_name
+    touch __init__.py
+    mkdir tests
+    cd tests
+    touch __init__.py    
+}
+
 create_git_structure() {
     local project_name=$1
 
     git init
+    touch .gitignore
+    echo 'venv/' > .gitignore
     touch README.md
     echo "# ${project_name}" > README.md
-}
-
-create_setup_py() {
-    touch setup.py
-}
-
-create_main_py() {
-    touch main.py
 }
 
 new() {
@@ -36,19 +43,15 @@ new() {
     go_to_project_folder $project_name
 
     create_venv
-    create_setup_py
-    create_main_py
-    create_git_structure $project_name
-
-    mkdir $project_name
-    cd $project_name
-    touch __init__.py
-    mkdir tests
-    cd tests
-    touch __init__.py
+    create_project_structure
+    create_module $project_name
 
     go_to_project_folder $project_name
     code .
+}
+
+init() {
+    create_git_structure $project_name
 }
 
 deploy() {
