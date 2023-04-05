@@ -27,13 +27,10 @@ create_module() {
 }
 
 create_git_structure() {
-    local project_name=$1
-
     git init
     touch .gitignore
     echo 'venv/' > .gitignore
     touch README.md
-    echo "# ${project_name}" > README.md
 }
 
 new() {
@@ -51,16 +48,16 @@ new() {
 }
 
 init() {
-    create_git_structure $project_name
+    create_git_structure
 }
 
 deploy() {
     sensible-browser https://github.com/new
-    read -p "Write the githut project name: " project_name
-    echo "You entered ${project_name}"
+    read -p "Write the githut project name: " github_project_name
+    echo "You entered ${github_project_name}"
     git add .
     git commit -m "First commit"
-    git remote add origin git@github.com:andricampagnaro/${project_name}.git
+    git remote add origin git@github.com:andricampagnaro/${github_project_name}.git
     git push -u origin master
 }
 
